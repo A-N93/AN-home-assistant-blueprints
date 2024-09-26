@@ -10,7 +10,7 @@ blueprint:
         device:
           integration: mqtt
           manufacturer: Aqara
-          model: 'lumi.remote.cube'
+          model: '0x00158d00051e4fc7'
     face_1_up:
       name: Face 1 up action
       description: Action when face 1 is facing up
