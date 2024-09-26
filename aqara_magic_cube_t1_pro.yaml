@@ -146,8 +146,7 @@ blueprint:
 
 trigger:
   - platform: mqtt
-    topic: zigbee2mqtt/<your_cube_topic>
-    payload: # Catch any state changes
+    topic: zigbee2mqtt/Aqara Magic Cube - Living Room
     value_template: "{{ trigger.payload_json.action }}"
 
 variables:
