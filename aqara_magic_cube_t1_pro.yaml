@@ -1,0 +1,225 @@
+blueprint:
+  name: Aqara Magic Cube T1 Pro Full Control
+  description: Control different actions for each face, rotation, and gestures for Aqara Magic Cube T1 Pro
+  domain: automation
+  input:
+    cube:
+      name: Magic Cube
+      description: Aqara Magic Cube T1 Pro device
+      selector:
+        device:
+          integration: mqtt
+          manufacturer: Aqara
+          model: 'lumi.remote.cube'
+    face_1_up:
+      name: Face 1 up action
+      description: Action when face 1 is facing up
+      default: []
+      selector:
+        action: {}
+    face_2_up:
+      name: Face 2 up action
+      description: Action when face 2 is facing up
+      default: []
+      selector:
+        action: {}
+    face_3_up:
+      name: Face 3 up action
+      description: Action when face 3 is facing up
+      default: []
+      selector:
+        action: {}
+    face_4_up:
+      name: Face 4 up action
+      description: Action when face 4 is facing up
+      default: []
+      selector:
+        action: {}
+    face_5_up:
+      name: Face 5 up action
+      description: Action when face 5 is facing up
+      default: []
+      selector:
+        action: {}
+    face_6_up:
+      name: Face 6 up action
+      description: Action when face 6 is facing up
+      default: []
+      selector:
+        action: {}
+    face_1_rotate_cw:
+      name: Rotate clockwise on face 1
+      description: Action when face 1 is rotated clockwise
+      default: []
+      selector:
+        action: {}
+    face_1_rotate_ccw:
+      name: Rotate counterclockwise on face 1
+      description: Action when face 1 is rotated counterclockwise
+      default: []
+      selector:
+        action: {}
+    face_2_rotate_cw:
+      name: Rotate clockwise on face 2
+      description: Action when face 2 is rotated clockwise
+      default: []
+      selector:
+        action: {}
+    face_2_rotate_ccw:
+      name: Rotate counterclockwise on face 2
+      description: Action when face 2 is rotated counterclockwise
+      default: []
+      selector:
+        action: {}
+    face_3_rotate_cw:
+      name: Rotate clockwise on face 3
+      description: Action when face 3 is rotated clockwise
+      default: []
+      selector:
+        action: {}
+    face_3_rotate_ccw:
+      name: Rotate counterclockwise on face 3
+      description: Action when face 3 is rotated counterclockwise
+      default: []
+      selector:
+        action: {}
+    face_4_rotate_cw:
+      name: Rotate clockwise on face 4
+      description: Action when face 4 is rotated clockwise
+      default: []
+      selector:
+        action: {}
+    face_4_rotate_ccw:
+      name: Rotate counterclockwise on face 4
+      description: Action when face 4 is rotated counterclockwise
+      default: []
+      selector:
+        action: {}
+    face_5_rotate_cw:
+      name: Rotate clockwise on face 5
+      description: Action when face 5 is rotated clockwise
+      default: []
+      selector:
+        action: {}
+    face_5_rotate_ccw:
+      name: Rotate counterclockwise on face 5
+      description: Action when face 5 is rotated counterclockwise
+      default: []
+      selector:
+        action: {}
+    face_6_rotate_cw:
+      name: Rotate clockwise on face 6
+      description: Action when face 6 is rotated clockwise
+      default: []
+      selector:
+        action: {}
+    face_6_rotate_ccw:
+      name: Rotate counterclockwise on face 6
+      description: Action when face 6 is rotated counterclockwise
+      default: []
+      selector:
+        action: {}
+    shake:
+      name: Shake action
+      description: Action when the cube is shaken
+      default: []
+      selector:
+        action: {}
+    push:
+      name: Push action
+      description: Action when the cube is pushed
+      default: []
+      selector:
+        action: {}
+    knock:
+      name: Knock action
+      description: Action when the cube is knocked
+      default: []
+      selector:
+        action: {}
+    double_tap:
+      name: Double tap action
+      description: Action when the cube is double tapped
+      default: []
+      selector:
+        action: {}
+
+trigger:
+  - platform: mqtt
+    topic: zigbee2mqtt/<your_cube_topic>
+    payload: # Catch any state changes
+    value_template: "{{ trigger.payload_json.action }}"
+
+variables:
+  cube_action: "{{ trigger.payload_json.action }}"
+  cube_face: "{{ trigger.payload_json.face }}"
+  cube_rotate: "{{ trigger.payload_json.rotate_direction }}"
+
+action:
+  - choose:
+      - conditions:
+          - "{{ cube_face == 1 and cube_action == 'flip90' }}"
+        sequence: !input face_1_up
+      - conditions:
+          - "{{ cube_face == 2 and cube_action == 'flip90' }}"
+        sequence: !input face_2_up
+      - conditions:
+          - "{{ cube_face == 3 and cube_action == 'flip90' }}"
+        sequence: !input face_3_up
+      - conditions:
+          - "{{ cube_face == 4 and cube_action == 'flip90' }}"
+        sequence: !input face_4_up
+      - conditions:
+          - "{{ cube_face == 5 and cube_action == 'flip90' }}"
+        sequence: !input face_5_up
+      - conditions:
+          - "{{ cube_face == 6 and cube_action == 'flip90' }}"
+        sequence: !input face_6_up
+      - conditions:
+          - "{{ cube_face == 1 and cube_rotate == 'clockwise' }}"
+        sequence: !input face_1_rotate_cw
+      - conditions:
+          - "{{ cube_face == 1 and cube_rotate == 'counterclockwise' }}"
+        sequence: !input face_1_rotate_ccw
+      - conditions:
+          - "{{ cube_face == 2 and cube_rotate == 'clockwise' }}"
+        sequence: !input face_2_rotate_cw
+      - conditions:
+          - "{{ cube_face == 2 and cube_rotate == 'counterclockwise' }}"
+        sequence: !input face_2_rotate_ccw
+      - conditions:
+          - "{{ cube_face == 3 and cube_rotate == 'clockwise' }}"
+        sequence: !input face_3_rotate_cw
+      - conditions:
+          - "{{ cube_face == 3 and cube_rotate == 'counterclockwise' }}"
+        sequence: !input face_3_rotate_ccw
+      - conditions:
+          - "{{ cube_face == 4 and cube_rotate == 'clockwise' }}"
+        sequence: !input face_4_rotate_cw
+      - conditions:
+          - "{{ cube_face == 4 and cube_rotate == 'counterclockwise' }}"
+        sequence: !input face_4_rotate_ccw
+      - conditions:
+          - "{{ cube_face == 5 and cube_rotate == 'clockwise' }}"
+        sequence: !input face_5_rotate_cw
+      - conditions:
+          - "{{ cube_face == 5 and cube_rotate == 'counterclockwise' }}"
+        sequence: !input face_5_rotate_ccw
+      - conditions:
+          - "{{ cube_face == 6 and cube_rotate == 'clockwise' }}"
+        sequence: !input face_6_rotate_cw
+      - conditions:
+          - "{{ cube_face == 6 and cube_rotate == 'counterclockwise' }}"
+        sequence: !input face_6_rotate_ccw
+      - conditions:
+          - "{{ cube_action == 'shake' }}"
+        sequence: !input shake
+      - conditions:
+          - "{{ cube_action == 'push' }}"
+        sequence: !input push
+      - conditions:
+          - "{{ cube_action == 'knock' }}"
+        sequence: !input knock
+      - conditions:
+          - "{{ cube_action == 'double_tap' }}"
+        sequence: !input double_tap
